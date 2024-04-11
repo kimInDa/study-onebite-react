@@ -1,0 +1,5 @@
+.Header > h1 {
+  background: var(--my-color);
+  -webkit-background-clip: text;
+  color: transparent;
+}
