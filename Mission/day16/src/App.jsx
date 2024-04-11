@@ -1,8 +1,7 @@
-import { useReducer } from "react";
 import "./App.css";
 import ContactEditor from "./components/ContactEditor";
 import ContactList from "./components/ContactList";
-import { useRef } from "react";
+import { useRef, useReducer, useCallback } from "react";
 
 /* 실제로 State의 값을 변경시키는 reducer 함수 */
 const reducer = (state, action) => {
@@ -27,7 +26,8 @@ function App() {
   const idRef = useRef(0);
 
   /* 새로운 연락처를 추가하는 함수 - <ContactEditor/> 컴포넌트에서 호출될 예정 */
-  const onCreateContact = (name, contact) => {
+  // ✅ useCallback 사용한 함수 재생성 방지
+  const onCreateContact = useCallback((name, contact) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -36,15 +36,16 @@ function App() {
         contact,
       },
     });
-  };
+  }, []);
 
   /* 기존 연락처를 삭제하는 함수 - <ContactItem/> 컴포넌트에서 호출될 예정 */
-  const onRemoveContact = (targetId) => {
+  // ✅ useCallback 사용한 함수 재생성 방지
+  const onRemoveContact = useCallback((targetId) => {
     dispatch({
       type: "REMOVE",
       targetId,
     });
-  };
+  }, []);
 
   return (
     <div className='App'>

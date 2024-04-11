@@ -1,11 +1,7 @@
 import "./ContactItem.css";
+import { memo } from "react";
 
-export default function ContactItem({
-  id,
-  name,
-  contact,
-  onRemoveContact,
-}) {
+function ContactItem({ id, name, contact, onRemoveContact }) {
   return (
     <div className="ContactItem">
       <div className="name">{name}</div>
@@ -14,3 +10,6 @@ export default function ContactItem({
     </div>
   );
 }
+
+// ✅ React.memo를 활용한 ContactItem 컴포넌트 최적화
+export default memo(ContactItem);

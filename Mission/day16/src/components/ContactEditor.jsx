@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import "./ContactEditor.css";
 
-export default function ContactEditor({ onCreateContact }) {
+function ContactEditor({ onCreateContact }) {
   /* 사용자로부터 입력받은 이름과 연락처를 저장할 State */
   const [state, setState] = useState({
     name: "",
@@ -58,3 +58,6 @@ export default function ContactEditor({ onCreateContact }) {
     </div>
   );
 }
+
+// ✅ React.memo를 활용한 ContactEditor 컴포넌트 최적화
+export default memo(ContactEditor);
