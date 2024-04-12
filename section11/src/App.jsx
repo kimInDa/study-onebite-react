@@ -1,5 +1,11 @@
 import "./App.css";
-import { useState, useRef, useReducer, useCallback } from "react";
+import {
+  useState,
+  useRef,
+  useReducer,
+  useCallback,
+  createContext,
+} from "react";
 import Editor from "./components/Editor";
 import Header from "./components/Header";
 import List from "./components/List";
@@ -26,6 +32,7 @@ const mockData = [
   },
 ];
 
+// # useReducer로 상태관리 코드 분리하기
 function reducer(state, action) {
   switch (action.type) {
     case "CREATE":
@@ -40,6 +47,9 @@ function reducer(state, action) {
       return state;
   }
 }
+
+// # Context로 Props Drilling 해결하기
+export const TodoContext = createContext();
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -92,9 +102,11 @@ function App() {
   return (
     <div className='App'>
       {/* <ExamUseReducer /> */}
-      <Header />
-      <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      <TodoContext.Provider value={{ todos, onCreate, onUpdate, onDelete }}>
+        <Header />
+        <Editor onCreate={onCreate} />
+        <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      </TodoContext.Provider>
     </div>
   );
 }
