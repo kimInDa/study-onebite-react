@@ -1,12 +1,17 @@
-import { useState } from "react";
 import "./ContactEditor.css";
+import { contactDispatchedContext } from "../App";
+import { useState, useContext } from "react";
 
-export default function ContactEditor({ onCreateContact }) {
+/* ✅ 5. Context로 공급받을 것이므로 매개변수에서 기존 Props 제거 */
+export default function ContactEditor() {
   /* 사용자로부터 입력받은 이름과 연락처를 저장할 State */
   const [state, setState] = useState({
     name: "",
     contact: "",
   });
+
+  /* ✅ 6. ContactDispatchContext로 부터 onCreateContact 공급받기*/
+  const { onCreateContact } = useContext(contactDispatchedContext);
 
   /* 입력된 값을 State에 보관하는 이벤트 핸들러 */
   const onChangeState = (e) => {

@@ -1,9 +1,7 @@
-import { useReducer } from "react";
 import "./App.css";
 import ContactEditor from "./components/ContactEditor";
 import ContactList from "./components/ContactList";
-import { useRef } from "react";
-import { useCallback } from "react";
+import { useRef, useReducer, useCallback, createContext, useMemo } from "react";
 
 /* 실제로 State의 값을 변경시키는 reducer 함수 */
 const reducer = (state, action) => {
@@ -19,6 +17,11 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
+/* ✅ 1. contacts State를 공급하는 Context 생성 */
+export const contactStateContext = createContext();
+/* ✅ 2. onCreateContact, onRemoveContact를 공급하는 Context 생성 */
+export const contactDispatchedContext = createContext();
 
 function App() {
   /* App 전반에 사용될 연락처 데이터(배열) */
@@ -47,15 +50,25 @@ function App() {
     });
   }, []);
 
+  /* ✅ 3. contactDispatchedContext의 value로 전달될 객체가 재생성 되지 않도록 방지*/
+  const memoizedDispatches = useMemo(() => {
+    return { onCreateContact, onRemoveContact };
+  }, []);
+
   return (
     <div className='App'>
       <h2>Contact List</h2>
-      <section>
-        <ContactEditor onCreateContact={onCreateContact} />
-      </section>
-      <section>
-        <ContactList contacts={contacts} onRemoveContact={onRemoveContact} />
-      </section>
+      {/* ✅ 4. 데이터 공급을 위한 Provider 설정 + 기존 Props는 제거 */}
+      <contactStateContext.Provider value={contacts}>
+        <contactDispatchedContext.Provider value={memoizedDispatches}>
+          <section>
+            <ContactEditor />
+          </section>
+          <section>
+            <ContactList />
+          </section>
+        </contactDispatchedContext.Provider>
+      </contactStateContext.Provider>
     </div>
   );
 }
