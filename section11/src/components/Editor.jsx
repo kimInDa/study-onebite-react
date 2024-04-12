@@ -1,12 +1,12 @@
 import "./Editor.css";
 import { useState, useRef } from "react";
-import { TodoContext } from "../App";
+import { TodoDispatchContext } from "../App";
 import { useContext } from "react";
 
 function Editor() {
   const [content, setContent] = useState("");
   const contentRef = useRef();
-  const { onCreate } = useContext(TodoContext);
+  const { onCreate } = useContext(TodoDispatchContext);
 
   const onChangeContent = (e) => {
     setContent(e.target.value);

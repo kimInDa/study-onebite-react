@@ -5,6 +5,7 @@ import {
   useReducer,
   useCallback,
   createContext,
+  useMemo,
 } from "react";
 import Editor from "./components/Editor";
 import Header from "./components/Header";
@@ -49,7 +50,11 @@ function reducer(state, action) {
 }
 
 // # Context로 Props Drilling 해결하기
-export const TodoContext = createContext();
+// export const TodoContext = createContext();
+
+// # Context 분리하기
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -99,14 +104,21 @@ function App() {
     });
   }, []);
 
+  // # App이 리렌더링 되어도 TodoDispatchContext의 value로 전달할 함수 객체 묶음 재생성 방지
+  const memoizedDispatch = useMemo(() => {
+    return { onCreate, onUpdate, onDelete };
+  }, []);
+
   return (
     <div className='App'>
       {/* <ExamUseReducer /> */}
-      <TodoContext.Provider value={{ todos, onCreate, onUpdate, onDelete }}>
-        <Header />
-        <Editor />
-        <List />
-      </TodoContext.Provider>
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={memoizedDispatch}>
+          <Header />
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }

@@ -97,3 +97,26 @@
 <br>
 
 ## chapter 03. Context 분리하기
+
+### 1. Context를 사용하면 왜 최적화가 풀릴까?
+
+- Provider 컴포넌트도 React의 컴포넌트. 따라서 부모 컴포넌트로부터 value props로 제공받는 객체가 변경되면(props가 변경되면) 리렌더링이 발생하게 된다.
+  <img src="./public/Context_05.jpeg" />
+- 자식 컴포넌트들의 입장에서는 부모 컴포넌트인 Provider 컴포넌트가 리렌더링 되는 것이기 때문에 자식 컴포넌트로써 함께 리렌더링 되는 것이다.
+  <img src="./public/Context_06.jpeg" />
+- 하지만 자식 컴포넌트에 자신이 받는 props가 변경되지 않으면 리렌더링 되지 않도록 React.memo로 최적화를 해둔 상태인데도 리렌더링이 발생하는 이유는,
+  <img src="./public/Context_07.jpeg" />
+- App 컴포넌트에서 전달하는 데이터 객체의 상태값(todos state)에 변경이 일어날 경우 App 컴포넌트가 리렌더링이 되는데, 이 때 Provider 컴포넌트가 value props로 전달하는 객체 자체가 다시 생성이 된다.
+  <img src="./public/Context_08.jpeg" />
+- 따라서 Context로 부터 value props로 전달받는 객체 자체가 다시 생성이 되기 때문에 자식 컴퍼넌트도 리렌더링이 발생하게 된다. 왜냐하면 React.memo를 적용했더라도 이렇게 useContext로 부터 불러온 값이 변경되면 props가 변경된 것과 동일하게 리렌더링을 발생시키기 때문이다.
+  <img src="./public/Context_09.jpeg" />
+
+### 2. 해결 방안
+
+- 공급하는 Context를 2개의 Context로 분리해서 해결할 수 있다.
+- 변경되는 값을 공급하는 Context와 변경되지 않는 값의 Context로 분리한다.
+  <img src="./public/Context_10.jpeg" />
+  - 이렇게 할 경우 todos의 변경이 일어나도 onCreate, onUpdate, onDelete는 바뀌지 않는다.
+- 즉, 분리하여 공급하면 변경되는 값을 공급받는 자식 컴포넌트만 리렌더링이 일어난다.
+  <img src="./public/Context_11.jpeg" />
+  - 부모 컴포넌트가 리렌더링 되므로 원래라면 Editor와 TodoItem 모두 리렌더링 되는 것이 맞지만 React.memo를 적용하면 리렌더링이 일어나지 않는다.
