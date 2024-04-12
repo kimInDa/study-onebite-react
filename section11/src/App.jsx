@@ -104,8 +104,8 @@ function App() {
       {/* <ExamUseReducer /> */}
       <TodoContext.Provider value={{ todos, onCreate, onUpdate, onDelete }}>
         <Header />
-        <Editor onCreate={onCreate} />
-        <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+        <Editor />
+        <List />
       </TodoContext.Provider>
     </div>
   );
