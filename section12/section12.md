@@ -181,3 +181,34 @@
 <br>
 
 # Chapter 04. 페이지 라우팅 - 3. 페이지 이동
+
+- React App에서 페이지를 이동시키는 방법
+
+### 1. `<Link>` 컴포넌트
+
+- React Router에서 제공하는 컴포넌트
+
+- `<a>` 태그는 페이지 이동 시 새로고침이 발생하지만(CSR 지원❌) `<Link>` 컴포넌트는 새로고침 없이 페이지를 이동시킬 수 있다.
+  ```jsx
+  <Link to={"/"}>Home</Link>
+  <Link to={"/new"}>New</Link>
+  <Link to={"/diary"}>Diary</Link>
+  ```
+
+### 2. useNavigate 훅
+
+- React Router에서 제공하는 훅
+- **특정 이벤트가 발생했을 때** 함수를 이용하여 페이지를 이동시킬 수 있다.
+- CSR 방식으로 동작하기 때문에 페이지 이동 시 새로고침이 발생하지 않는다.
+
+  ```jsx
+  // 1. useNavigate 호출 시 반환되는 함수를 이용한다.
+  const nav = useNavigate();
+
+  function onClickButton = () => {
+    // 2. 함수 인수로 이동하고자 하는 경로를 넣어준다.
+    nav("/new")
+  }
+          // 3. button의 onClick 이벤트로 페이지 이동 함수를 호출한다.
+  return <button onClick={onCickButton}>New 페이지로 이동</button>
+  ```

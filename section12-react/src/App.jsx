@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import New from "./pages/New";
 import Diary from "./pages/Diary";
@@ -12,17 +12,37 @@ import Notfound from "./pages/Notfound";
 // 4. "/*" : 설정하지 않은 페이지
 
 function App() {
+  // # useNavigate 훅을 이용한 페이지 이동
+  const nav = useNavigate();
+
+  const onClickButton = () => {
+    nav("/new");
+  };
+
   return (
-    // ! Routes 외부의 컴포넌트는 모든 페이지에서 렌더링 된다.(Routes 내부만 페이지 변경시 변경됨)
-    // <Home />
-    <Routes>
-      {/* // ! Routes 내부에는 Route만 가능하다. */}
-      {/* <div>Routes 내부에는 Route만 가능</div> */}
-      <Route path='/' element={<Home />} />
-      <Route path='/new' element={<New />} />
-      <Route path='/diary' element={<Diary />} />
-      <Route path='/*' element={<Notfound />} />
-    </Routes>
+    <>
+      {/* // ! Routes 외부의 컴포넌트는 모든 페이지에서 렌더링 된다.(Routes 내부만 페이지 변경시 변경됨) */}
+      {/* // <Home /> */}
+
+      {/* // # Link 컴포넌트를 이용한 페이지 이동 */}
+      <div>
+        <Link to={"/"}>Home</Link>
+        <Link to={"/new"}>New</Link>
+        <Link to={"/diary"}>Diary</Link>
+      </div>
+
+      {/* // # 페이지 이동 함수 호출 */}
+      <button onClick={onClickButton}>New 페이지로 이동</button>
+
+      <Routes>
+        {/* // ! Routes 내부에는 Route만 가능하다. */}
+        {/* <div>Routes 내부에는 Route만 가능</div> */}
+        <Route path='/' element={<Home />} />
+        <Route path='/new' element={<New />} />
+        <Route path='/diary' element={<Diary />} />
+        <Route path='/*' element={<Notfound />} />
+      </Routes>
+    </>
   );
 }
 
