@@ -212,3 +212,95 @@
           // 3. button의 onClick 이벤트로 페이지 이동 함수를 호출한다.
   return <button onClick={onCickButton}>New 페이지로 이동</button>
   ```
+
+<br>
+<br>
+
+# Chapter 05. 페이지 라우팅 - 4. 동적 경로
+
+동적 경로로 페이지를 라우팅 하는 방법
+
+### 1. 동적 경로(Dynamic Segments)란?
+
+- 동적인 데이터를 포함하고 있는 경로
+  <img src="./12_05_01.jpeg" />
+
+### 2. 동적 경로의 종류
+
+#### 1) URL Parameter
+
+- `/` 뒤에 아이템의 id를 명시
+- 아이템의 id 등의 변경되지 않는 값을 주소로 명시하기 위해 사용 된다.
+
+#### 2) Query String
+
+- `?` 뒤에 변수명과 값 명시
+- 검색어 등의 자주 변경되는 값을 주소로 명시하기 위해 사용 된다.
+
+<img src="./12_05_02.jpeg" />
+
+### 3. URL Parameter 사용법
+
+#### 1) `:id`
+
+- 이제부터 특정 경로에서 URL 파라미터를 사용할 것임을 알려주기
+
+```jsx
+// 경로 예시 : www.diary.com/diary/100
+
+// path props로 지정한 경로 뒤에 /:id 를 붙여준다.
+<Route path='/diary/:id' element={<Diary />} />
+```
+
+- `/:id` : 동적 경로인 URL 파라미터를 의미
+- 이제 `/diary/100` 로 주소를 입력해도 모두 다이어리 페이지의 URL 파라미터로 해석되기 때문에 다이어리 페이지가 잘 렌더링 된다.
+
+#### 2) useParams 훅
+
+- 경로를 사용하는 페이지 컴포넌트에서 URL 파라미터로 전달한 값을 꺼내올 수 있도록 설정
+
+- React Router 에서 제공하는 훅
+- 현재 브라우저에 명시한 URL 파라미터의 값을 가져오는 기능의 훅
+- `params.id` 로 꺼내쓴다.
+
+```jsx
+// Diary.jsx
+import { useParams } from "react-router-dom";
+
+function Diary() {
+  const params = useParamas(); // 현재 브라우저에 명시되어 있는 URL 파라미터의 값을 반환한다.
+  console.log(params); // {id: 100}
+  console.log(params.id); // 100
+
+  return <>{prams.id}번 페이지 입니다.</>; // 100번 페이지 입니다.
+}
+```
+
+  <img src="./12_05_03.jpeg" />
+
+### 4. Query String 사용법
+
+```jsx
+// 경로 예시 : www.diary.com/?value=hello&value2=hello2
+```
+
+#### 1) useSearchParams 훅
+
+- Query String을 사용하는 페이지 컴포넌트에서 사용
+
+```jsx
+// Home.jsx
+import { useSearchParams } from "react-router-dom";
+
+function Home() {
+  const [params, setParams] = useSearchParams();
+  console.log(params.get("value")); // hello
+  console.log(params.get("value2")); // hello2
+
+  return <>Home</>;
+}
+```
+
+- `params` : Query String 으로 전달한 값들이 들어온다.
+  - get(전달한 변수) : Query String에 저장한 값들 중에 변수로 전달한 값을 가져온다.
+- `setParams` : 특정 Query String 값을 변경할 수 있는 함수가 들어온다.

@@ -39,7 +39,8 @@ function App() {
         {/* <div>Routes 내부에는 Route만 가능</div> */}
         <Route path='/' element={<Home />} />
         <Route path='/new' element={<New />} />
-        <Route path='/diary' element={<Diary />} />
+        {/* //# 동적 경로 : URL Parameter 설정하기 */}
+        <Route path='/diary/:id' element={<Diary />} />
         <Route path='/*' element={<Notfound />} />
       </Routes>
     </>
