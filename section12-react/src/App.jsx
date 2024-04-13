@@ -4,12 +4,14 @@ import Home from "./pages/Home";
 import New from "./pages/New";
 import Diary from "./pages/Diary";
 import Notfound from "./pages/Notfound";
+import Edit from "./pages/Edit";
 
 // 구현할 페이지 list => page 컴포넌트 생성
 // 1. "/" : 모든 일기를 조회하는 Home 페이지
 // 2. "/new" : 새로운 일기를 작성하는 New 페이지
 // 3. "/diary" : 일기를 상세히 조회하는 Diary 페이지
-// 4. "/*" : 설정하지 않은 페이지
+// 4. "/edit" : 일기를 수정하는 Edit 페이지 (Mission!)
+// 0. "/*" : 설정하지 않은 페이지
 
 function App() {
   // # useNavigate 훅을 이용한 페이지 이동
@@ -29,6 +31,7 @@ function App() {
         <Link to={"/"}>Home</Link>
         <Link to={"/new"}>New</Link>
         <Link to={"/diary"}>Diary</Link>
+        <Link to={"/edit"}>Edit</Link>
       </div>
 
       {/* // # 페이지 이동 함수 호출 */}
@@ -41,6 +44,7 @@ function App() {
         <Route path='/new' element={<New />} />
         {/* //# 동적 경로 : URL Parameter 설정하기 */}
         <Route path='/diary/:id' element={<Diary />} />
+        <Route path='/edit/:id' element={<Edit />} />
         <Route path='/*' element={<Notfound />} />
       </Routes>
     </>
