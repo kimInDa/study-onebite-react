@@ -76,3 +76,9 @@ function Component() {
 ## 2 - 2. 여러장의 이미지 불러오기 모듈화
 
 - JSX 파일별로 매번 import문 작성하기 번거로우므로 이미지를 불러오는 코드를 별도의 모듈로 분리 => getEmotionImage 함수 생성
+
+<br>
+
+## 3. 레이아웃 설정하기
+
+- index.css에서 전체 레이아웃 CSS 설정
