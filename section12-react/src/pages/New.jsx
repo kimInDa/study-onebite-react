@@ -1,5 +1,5 @@
-function New() {
-  return <>New</>;
-}
+const New = () => {
+  return <div>New</div>;
+};
 
 export default New;
