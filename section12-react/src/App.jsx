@@ -5,6 +5,7 @@ import New from "./pages/New";
 import Diary from "./pages/Diary";
 import Notfound from "./pages/Notfound";
 import Edit from "./pages/Edit";
+import Button from "./components/Button";
 
 // 구현할 페이지 list => page 컴포넌트 생성
 // 1. "/" : 모든 일기를 조회하는 Home 페이지
@@ -16,6 +17,29 @@ import Edit from "./pages/Edit";
 function App() {
   return (
     <>
+      <Button
+        text={"123"}
+        onClick={() => {
+          console.log("123번 버튼 클릭!");
+        }}
+      />
+
+      <Button
+        text={"123"}
+        type={"POSITIVE"}
+        onClick={() => {
+          console.log("123번 버튼 클릭!");
+        }}
+      />
+
+      <Button
+        text={"123"}
+        type={"NEGATIVE"}
+        onClick={() => {
+          console.log("123번 버튼 클릭!");
+        }}
+      />
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/new' element={<New />} />
