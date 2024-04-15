@@ -6,6 +6,7 @@ import Diary from "./pages/Diary";
 import Notfound from "./pages/Notfound";
 import Edit from "./pages/Edit";
 import Button from "./components/Button";
+import Header from "./components/Header";
 
 // 구현할 페이지 list => page 컴포넌트 생성
 // 1. "/" : 모든 일기를 조회하는 Home 페이지
@@ -17,6 +18,12 @@ import Button from "./components/Button";
 function App() {
   return (
     <>
+      <Header
+        title={"Header"}
+        leftChild={<Button text={"Left"} />}
+        rightChild={<Button text={"Right"} />}
+      />
+
       <Button
         text={"123"}
         onClick={() => {
