@@ -1,5 +1,16 @@
+import Header from "../components/Header";
+import Button from "../components/Button";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Header
+        title={"2024년 02월"}
+        leftChild={<Button text={"<"} />}
+        rightChild={<Button text={">"} />}
+      />
+    </div>
+  );
 };
 
 export default Home;
