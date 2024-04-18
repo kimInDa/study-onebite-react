@@ -99,7 +99,7 @@ const Editor = ({ onSubmit }) => {
         <Button onClick={() => nav(-1)} text={"취소하기"} />
         <Button
           onClick={onClickSubmitButton}
-          text={"작성하기"}
+          text={"작성완료"}
           type={"POSITIVE"}
         />
       </section>
