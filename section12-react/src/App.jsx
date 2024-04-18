@@ -52,6 +52,23 @@ function App() {
     }
 
     const parsedData = JSON.parse(storedData);
+
+    // 일기 Id 중 제일 큰 값 찾기 -> 다음에 생성되는 일기의 Id는 제일 큰 값 + 1 로 부여
+    // parsedData가 빈 값이라 배열이 아닐 경우 forEach 오류가 날 수 있으므로 return 으로 강제 종료
+    // JSON.parse() 로 꺼내온 데이터는 모두 문자열 타입이 되기 때문에 숫자로 변환 필요
+    if (!Array.isArray(parsedData)) {
+      return;
+    }
+
+    let maxId = 0;
+    parsedData.forEach((item) => {
+      if (Number(item.id) > maxId) {
+        maxId = Number(item.id);
+      }
+    });
+
+    idRef.current = maxId + 1;
+
     dispatch({
       type: "INIT",
       data: parsedData,
