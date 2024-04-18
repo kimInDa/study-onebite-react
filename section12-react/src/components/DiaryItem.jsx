@@ -10,6 +10,12 @@ const DiaryItem = ({ id, emotionId, createdDate, content }) => {
 
   const { onDelete } = useContext(DiaryDispatchContext);
 
+  const onClickDelete = () => {
+    if (window.confirm("일기를 정말 삭제할까요? 다시 복구되지 않아요!")) {
+      onDelete(id);
+    }
+  };
+
   return (
     <div className='DiaryItem'>
       <div
@@ -26,11 +32,7 @@ const DiaryItem = ({ id, emotionId, createdDate, content }) => {
       </div>
       <div className='button_section'>
         <Button onClick={() => nav(`/edit/${id}`)} text={"수정하기"} />
-        <Button
-          onClick={() => onDelete(id)}
-          text={"삭제하기"}
-          type={"NEGATIVE"}
-        />
+        <Button onClick={onClickDelete} text={"삭제하기"} type={"NEGATIVE"} />
       </div>
     </div>
   );
