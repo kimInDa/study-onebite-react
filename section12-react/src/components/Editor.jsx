@@ -1,6 +1,7 @@
 import "./Editor.css";
 import Button from "./Button";
 import EmotionItem from "./EmotionItem";
+import { useState } from "react";
 
 const emotionList = [
   { emotionId: 1, emotionName: "완전 좋음" },
@@ -10,14 +11,56 @@ const emotionList = [
   { emotionId: 5, emotionName: "끔찍함" },
 ];
 
+const getStringedDate = (targetDate) => {
+  // new Date() -> YYYY-MM-DD 로 변환 : date 타입의 input은 vlaue로 들어오는 값의 형식으로 "YYYY-MM-DD"만 인식하기 떄문에
+  let year = targetDate.getFullYear();
+  let month = targetDate.getMonth() + 1;
+  let date = targetDate.getDate();
+
+  // 한자리 수의 월과 일의 앞자리에 0 붙여주기
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (date < 10) {
+    date = `0${date}`;
+  }
+
+  return `${year}-${month}-${date}`;
+};
+
 const Editor = () => {
   const emotionId = 3;
+  const [input, setInput] = useState({
+    createdDate: new Date(),
+    emotionId: 3,
+    content: "",
+  });
+
+  const onChangeInput = (e) => {
+    // createdDate의 값은 new Date()이 아니라 YYYY-MM-DD 으로 들어오므로 다시 new Date()로 변경
+    let name = e.target.name;
+    let value = e.target.value;
+
+    if (name === "createdDate") {
+      value = new Date(value);
+    }
+
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
 
   return (
     <div className='Editor'>
       <section className='date_section'>
         <h4>오늘의 날짜</h4>
-        <input type='date' />
+        <input
+          name='createdDate'
+          onChange={onChangeInput}
+          value={getStringedDate(input.createdDate)}
+          type='date'
+        />
       </section>
       <section className='emotion_section'>
         <h4>오늘의 감정</h4>
