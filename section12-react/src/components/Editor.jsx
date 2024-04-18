@@ -3,14 +3,7 @@ import Button from "./Button";
 import EmotionItem from "./EmotionItem";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const emotionList = [
-  { emotionId: 1, emotionName: "완전 좋음" },
-  { emotionId: 2, emotionName: "좋음" },
-  { emotionId: 3, emotionName: "그럭저럭" },
-  { emotionId: 4, emotionName: "나쁨" },
-  { emotionId: 5, emotionName: "끔찍함" },
-];
+import { emotionList } from "../util/constants";
 
 const getStringedDate = (targetDate) => {
   // new Date() -> YYYY-MM-DD 로 변환 : date 타입의 input은 vlaue로 들어오는 값의 형식으로 "YYYY-MM-DD"만 인식하기 떄문에
