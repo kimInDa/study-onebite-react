@@ -1,11 +1,20 @@
 import { useParams } from "react-router-dom";
+import Header from "../components/Header";
+import Button from "../components/Button";
 
 const Diary = () => {
   //# 동적 경로 : URL Parameter 꺼내쓰기
   const params = useParams();
-  console.log(params); // {id : 100}
 
-  return <>{params.id}번 일기입니다 ~~</>;
+  return (
+    <div>
+      <Header
+        title={"yyyy-mm-dd 기록"}
+        leftChild={<Button text={"< 뒤로 가기"} />}
+        rightChild={<Button text={"수정하기"} />}
+      />
+    </div>
+  );
 };
 
 export default Diary;
