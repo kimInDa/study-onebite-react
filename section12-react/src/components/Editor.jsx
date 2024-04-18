@@ -29,7 +29,6 @@ const getStringedDate = (targetDate) => {
 };
 
 const Editor = () => {
-  const emotionId = 3;
   const [input, setInput] = useState({
     createdDate: new Date(),
     emotionId: 3,
@@ -67,9 +66,15 @@ const Editor = () => {
         <div className='emotion_list_wrapper'>
           {emotionList.map((item) => (
             <EmotionItem
+              // EmontionItem은 input 태그가 아닌 컴포넌트이기 때문에 event 겍체가 전달되지 않으므로 우리가 객체를 만들어주어야 함
+              onClick={() =>
+                onChangeInput({
+                  target: { name: "emotionId", value: item.emotionId },
+                })
+              }
               key={item.emotionId}
               {...item}
-              isSelected={item.emotionId === emotionId}
+              isSelected={item.emotionId === input.emotionId}
             />
           ))}
         </div>
