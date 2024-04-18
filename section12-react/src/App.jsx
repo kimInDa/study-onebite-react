@@ -1,5 +1,5 @@
 import "./App.css";
-import { useReducer, useRef, createContext, useEffect } from "react";
+import { useReducer, useRef, createContext, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -40,6 +40,7 @@ export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
 function App() {
+  const [isLoading, seIsLoading] = useState(true);
   const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(data.length + 1);
 
@@ -48,6 +49,7 @@ function App() {
 
     // JSON.parse()의 인수에 null이나 undefined가 전달되면 오류가 발생하므로 오류 방지
     if (!storedData) {
+      seIsLoading(false);
       return;
     }
 
@@ -57,6 +59,7 @@ function App() {
     // parsedData가 빈 값이라 배열이 아닐 경우 forEach 오류가 날 수 있으므로 return 으로 강제 종료
     // JSON.parse() 로 꺼내온 데이터는 모두 문자열 타입이 되기 때문에 숫자로 변환 필요
     if (!Array.isArray(parsedData)) {
+      seIsLoading(false);
       return;
     }
 
@@ -73,6 +76,8 @@ function App() {
       type: "INIT",
       data: parsedData,
     });
+
+    seIsLoading(false);
   }, []);
 
   // 새로운 일기 추가
@@ -108,6 +113,10 @@ function App() {
       id,
     });
   };
+
+  if (isLoading) {
+    return <div>데이터 로딩중입니다 ...</div>;
+  }
 
   return (
     <>
